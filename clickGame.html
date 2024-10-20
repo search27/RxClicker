@@ -1,0 +1,744 @@
+<html>
+    <head>
+
+        <meta charset="UTF-8" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+        <style>
+            * {
+                box-sizing: border-box; 
+                font-family: "Oswald", sans-serif;
+            }
+            html, body {
+                margin : 0;
+                padding : 0;
+                overflow: hidden;
+            }
+            
+
+            .info {
+                position: absolute;
+                left : 10px;
+                bottom: 10px;
+                color : white;
+                z-index: 99999999;
+            }
+            .info > div { 
+                display: flex;
+                width: 300px;
+            }
+            .info > div > span {
+                flex : 1;
+            }
+
+            .confirm-msg {
+                position: absolute;
+                top : 50%;
+                left : 50%;
+                transform: translate(-50%, -50%);
+                width : 700px;
+                background: black;
+
+
+                border-radius: 5px;
+                box-shadow: 1px 2px 3px black;
+
+                z-index: 999999999;
+                padding :10px;
+            }
+            .confirm-msg > div {
+                color : white;
+                display: flex;
+                font-size: 33px;
+                padding :10px;
+            }
+            .confirm-msg > div > button {
+                border-radius: 3px;
+                flex : 1;
+                border : 0;
+                font-size: 33px;
+                padding :10px;
+                margin : 1px;
+            }
+
+
+
+
+            .background {
+                position: absolute;
+                top : 0;
+                left : 0;
+                width: 100%;
+                height: 100%;
+                background: rgb(2,0,36);
+                background: linear-gradient(173deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
+            }
+            .background > div {
+                position: absolute;
+                top : 0;
+                left : 0;
+                width: 100%;
+                height: 100%;
+            }
+            .background .bg1 {
+                background-image: url('./images/magic.png');
+                background-size: 100%;
+                background-position: 50% 50%;
+                filter: hue-rotate(198deg);
+            }
+            .background .bg2 {
+                background-image: url('./images/magic.png');
+                background-size: 100%;
+                background-position: 50% 50%;
+                filter: blur(10px);
+            }
+
+            #bgDom > canvas:nth-child(3) {
+                z-index: 99;
+
+            }
+            #bgDom > canvas:nth-child(4){
+                background: #000000;
+                filter: blur(100px) contrast(10);
+                mix-blend-mode: overlay;
+                opacity: .5;
+            }
+
+            #gamePannel {
+                position: absolute;
+                top : 0;
+                left : 0;
+                width: 100%;
+                height: 100%;
+                background-color: #229ecb;
+                z-index: 999;
+            }
+
+            .logo {
+                position : absolute;
+                top : 50%;
+                left : 50%;
+                transform: translate(-50%, -50%);
+                min-width: 100%;
+                min-height: 100%;
+                z-index: 9999;
+                text-align: center;
+                padding: 50%;
+            }
+            .logo * {
+                letter-spacing: 15px;
+                text-transform: uppercase;
+            }
+
+            .logo .image {
+                width: 320px;
+                height: 320px;
+                border-radius: 50%;
+                background-image: url('./images/rx_apis.png');
+                background-size: 250px 250px;
+                background-position: center;
+                box-shadow: 1px 2px 3px white;
+                overflow: hidden;
+                margin: 0 auto;
+
+                position: absolute;
+                top : 50%;
+                left : 50%;
+                transform: translate(-50%, calc(-50% - 130px));
+                z-index: 9999;
+            }
+            .logo .txt {
+                color : white;
+                font-size: 155px;
+                padding : 10px;
+                text-align: center;
+                font-weight: 100;
+                
+
+                position: absolute;
+                top : 50%;
+                left : 50%;
+                transform: translate(-50%, calc(-50% + 130px));
+                z-index: 9999;
+
+            }
+
+            .logo .svg {
+                position: absolute;
+                top : 0;
+                left : 0;
+                width: 100%;
+                height: 100%;
+                background-color: #229ecb;
+
+            }
+            svg {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                right: 50%;
+                transform: translate(-50%, -50%) scale(5.5);
+            }
+            .logo .svg div {
+                position: absolute;
+                top : 0;
+                left : 0;
+                width: 100%;
+                height: 100%;
+            }
+            .logo .svg div:nth-child(1){
+                mix-blend-mode: multiply;
+            }
+            .logo .svg div:nth-child(1) svg {
+                top : calc(50% + 1px);
+                left: calc(50% - 1px);
+            }
+            .logo .svg div:nth-child(2) {
+                mix-blend-mode: color-dodge;
+                opacity: 0.7;
+            }
+            .logo .svg div:nth-child(2) svg {
+                top : calc(50% - 1px);
+                left: calc(50% + 1px);
+            }
+            .logo .fade {
+                animation: fade 2.5s 1;
+                animation-timing-function: linear;
+
+            }
+
+            .notice {
+                position: fixed;
+                top: 10px;
+                right: 10px;
+                color : white;
+                letter-spacing: 2px;
+                z-index: 99999;
+            }
+            .notice * {
+                color: white;
+            }
+
+
+
+            .path {
+                animation: draw 2.5s infinite;
+                animation-timing-function: linear;
+            }
+
+            .mini-save {
+                position: absolute;
+                top : 50px;
+                right : 10px;
+                width: 50px;
+                height: 50px;
+
+                border : 0;
+                border-radius: 50%;
+                box-shadow: 1px 2px 3px black;
+
+                background-image: url('./images/rx_apis.png');
+                background-size: 50px 50px;
+                background-position: center;
+                background-repeat: no-repeat;
+
+                z-index: 99999999999;
+            }
+            .mini-save:hover {
+                box-shadow: 1px 2px 3px #ccc;
+            }
+            .mini-save:active {
+                box-shadow: -2px -1px 1px black
+            }
+
+            .save-header {
+                font-size: 33px;
+            }
+            .save-btns {
+                display: flex;
+                margin: 5px 0;
+            }
+            .save-btns > button {
+                flex : 1;
+                height: 50px;
+                margin : 1px;
+            }
+            .save-info {
+                border : 1px solid #ccc;
+                border-radius: 10px;
+                position: absolute;
+                top : 50%;
+                left : 50%;
+                transform: translate(-50%, -50%);
+                width: 50%;
+                background: white;
+                padding : 20px;
+                z-index: 99999999999;
+            }
+            .save-info * {
+                user-drag: none;
+                -webkit-user-drag: none;
+                user-select: none;
+                -moz-user-select: none;
+                -webkit-user-select: none;
+                -ms-user-select: none;
+            }
+
+            .save-info p { text-align: center;}
+
+            .save-info > div {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+            .save-info > div > label {
+                display: flex;
+                height: 50px;
+            }
+            .save-info > div > label * {
+                font-size: 23px;
+                line-height: 50px;
+            }
+            .save-info > div > label input {
+                flex : 1;
+                padding : 0 20px;
+            }
+            .save-info > div > label span {
+                min-width: 200px;
+            }
+
+
+            @keyframes draw {
+                0% {
+                }
+                100% {
+                    stroke-dashoffset: 0;
+                    stroke-opacity: 1;
+                }
+            }
+
+            @keyframes fade {
+                0% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+
+
+
+        </style>
+
+        <script src="./distFiles/RxFramework.js"></script>
+        <script>
+
+
+            const fireflyInit = () => {
+                const bgDom = document.getElementById('bgDom');
+
+                // Firefly Draw Canvas
+                const canvas = RxFirefly.CreateCanvas(bgDom, 1, true);
+
+                // Light Canvas
+                const cnv2 = RxFirefly.CreateCanvas(bgDom, 1, true);
+
+                fireflyCanvas1 = canvas;
+                fireflyCanvas2 = cnv2;
+
+                for(let i = 0; i < 55; i++){
+                    const firefly = new RxFirefly.Firefly(Math.random() * window.innerWidth, Math.random() * window.innerHeight, Math.random() * 2 );
+                    firefly.SetColor(`hsla(${Math.random() * 1000}, 70%, 70%, 0.8)`);
+                    firefly.SetEnvironmentInfo({
+                        x : 0, y : 0,
+                        width : window.innerWidth,
+                        height : window.innerHeight
+                    });
+                    fireflies.push(firefly);
+
+                    const poly = new RxFirefly.RxViscosityPolygon(
+                        window.innerWidth/2, window.innerHeight /  2,
+                        7,
+                        30,
+                        2,
+                        105
+                    );
+                    poly.SetColor(`rgba(255, 255, 255, 0.7)`);
+
+                    lights.push(poly);
+                }
+            }
+
+
+            const init = () => {
+                CanvasMover = new RxCanvasInterface.CanvasMover();
+                const defaultStyle = {
+                    font : 'Oswald',
+                    fontSize : 33,
+                    borderRadius : 10,
+                    lineWidth : 0.2,
+                };
+                RxCanvasInterface.SetDefaultProperties(defaultStyle);
+                
+
+                const isRenderSelf = false; // Default : true
+                interface = new RxCanvasInterface.Interface(document.body, isRenderSelf);
+
+
+                // Mouse Events
+                mouseEvt = new RxCanvasInterface.MouseEvents();
+                globalOption.mouseEvt = mouseEvt;
+                mouseEvt.SetActive(false);
+                // Setting Mouse Events
+                interface.SetMouseEvents(mouseEvt);
+                // Setting CanvasMover
+                interface.SetCanvasMover(CanvasMover);
+                interface.SetCollisionVisualize(false);
+
+                canvas = interface.GetCanvas();
+
+
+                skillTree = new RxSkillTree();
+                skillTree.SetCanvas(canvas[0].canvas);
+                skillTree.SetSkills(skills);
+                skillTree.CreateTree();
+                skillTree.SetInterface(interface);
+                skillTree.SetClickCallback((data) => {
+                    
+                    if(!data['isActive']){
+                        mouseEvt.SetActive(false);
+                        GamePannel.ShowConfirmMessage(
+                            `${data['desc']} - 해당 스킬을 개방하시겠습니까? (코인 : -${data.consume.CoinPoint}, 보유 코인 : ${GamePannel.CoinPoint.toFixed(2)})`, 
+                        3000, (bool)=>{
+                            if(bool) {
+
+                                if(!data.parent.isActive) {
+                                    GamePannel.ShowMessage('상위 빌드업이 개방되지 않았습니다.', 3000);
+                                }else{
+                                    const isDone = GamePannel.SetSkills(data.skills, data.consume, data.isActive);
+                                    if(isDone) {
+                                        data['isActive'] = bool;
+                                        GamePannel.ShowMessage(`개방 - ${data['name']}`, 3000);
+                                        GamePannel.SetCurrentBuildUp(data['name']);
+                                    }
+                                    else GamePannel.ShowMessage('보유 코인이 부족합니다.', 3000);
+                                }
+                            }
+                            mouseEvt.SetActive(true);
+                        });
+                    }else{
+
+                        const isDone = GamePannel.SetSkills(data.skills, data.consume, data.isActive);
+                        if(isDone){
+                            GamePannel.ShowMessage(`칭호 변경 - ${data['name']}`, 3000);
+                            GamePannel.SetCurrentBuildUp(data['name']);
+                        }else{
+
+                        }
+                        
+                    }
+                    
+                });
+
+
+                const nCanvas = canvas[0].canvas;
+                const size = 200;   // width, height
+                const buttonStyle = {
+                    text : '뒤로가기',
+                    lineWidth : .1,
+                    textAlign : 'center',
+                    textBaseline : 'middle',
+                    fontSize : 33,
+                    borderRadius : size/2,
+                    color : 'white',
+                    backgroundColor : 'none',
+                    hoverBackgroundColor : 'rgba(255, 255, 255, 0.2)',
+                    activeBackgroundColor : 'none',
+                };
+                const padding = 50;
+                const center = [ nCanvas.width - (size + padding), nCanvas.height - (size + padding)];
+                const button = new RxCanvasInterface.Button(center[0], center[1], size, size);
+                button.SetProperties(buttonStyle);
+                button.SetClickCallback((self) => { 
+                    if(globalOption.isShow){ 
+                        GamePannel.ShowPannel();
+                        mouseEvt.SetActive(false);
+                    }
+                });
+
+                backBtn = button.GetSelf();
+                interface.AddCollision(backBtn);
+
+
+                interface.SetLayerName(0, 'hero');
+            
+
+                let layerIndex = interface.CreateLayer();
+            
+                interface.AddComponent(layerIndex, backBtn);
+                interface.RemoveComponent(backBtn);
+
+                layerIndex = interface.CreateLayer();
+                interface.AddComponent(layerIndex, backBtn);
+                interface.AddCollision(backBtn);
+
+                fireflyInit();
+                anime();
+
+
+            }
+
+
+            let fireflyCanvas1;
+            let fireflyCanvas2;
+            const fireflies = [];
+            const lights = [];
+            
+            let interface;
+            let mouseEvt;
+            let canvas;
+            let skillTree;
+
+            let CanvasMover;
+            
+
+            
+            let globalOption = { isShow : false, mouseEvt : mouseEvt };
+            let backBtn;
+            window.onload = function(){
+                
+                setTimeout(init, 100);
+
+                setTimeout(()=>{
+                    CanvasMover.AddCanvas(canvas.slice(0,2), true, true);
+                    CanvasMover.AddCanvas(canvas.slice(2, canvas.length), false, false);
+                    CanvasMover.AddCanvas(fireflyCanvas1, false, false);
+                    CanvasMover.AddCanvas(fireflyCanvas2, false, false);
+                }, 100);
+
+                
+
+
+
+                // Game Start
+
+                setTimeout(() => {
+                    GamePannel.init();
+                    GamePannel.SetGOption(globalOption);
+                    setTimeout(function(){ 
+                        GamePannel.Start(); 
+                    }, 1000);
+                }, 200);
+
+                
+
+
+
+
+
+            }
+
+            const anime = function(){
+
+                if(!globalOption.isShow){
+                    fireflyCanvas1.forEach(each => { each.ctx.clearRect(0, 0, each.canvas.width, each.canvas.height )});
+                    fireflyCanvas2.forEach(each => { each.ctx.clearRect(0, 0, each.canvas.width, each.canvas.height )});
+                    mouseEvt.SetActive(false);
+                }
+                
+                CanvasMover.SetActive(globalOption.isShow);
+                CanvasMover.Clear();
+                skillTree.render();
+
+
+
+                fireflies.forEach((firefly, index) => {
+                    firefly.update();
+                    firefly.draw(fireflyCanvas1[0].ctx);
+
+                    lights[index].Follow(firefly.GetPosition());
+                    lights[index].update();
+                    lights[index].draw(fireflyCanvas2[0].ctx);
+
+                })
+
+
+                interface.render();
+                GamePannel.render();
+
+                requestAnimationFrame(anime);
+            }
+
+
+        </script>
+
+    </head>
+
+    <body>
+
+        <div class="notice">Support By Cloud Rx (<a href='https://rxapis.com'>https://rxapis.com</a>)</div>
+
+        <canvas id="gamePannel"></canvas>
+        <div id="logo" class="logo">
+            <div id="logoImage" class="image" style="display: none;"></div>
+            <div id="logoTxt" class="txt" style="display: none;">
+                Rx클릭커
+            </div>
+            <div class="svg">
+                <div>
+                    <svg  width="300px" height="300px" viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <g id="circuit" class="path" stroke-width="1" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="1" stroke-dasharray="45, 45" stroke-dashoffset="180" fill="#fff" stroke="#02B3E4">
+                        <polyline style="fill:none;stroke:#50C4E8;stroke-miterlimit:10;" points="28.651,131.726 56.151,131.726 56.151,145.726 
+                    249.645,145.726 249.645,128.226     "/>
+                    <circle style="fill:#FFFFFF;stroke:#50C4E8;stroke-miterlimit:10;" cx="28.651" cy="131.726" r="3.057"/>
+                    <path style="fill:#FFFFFF;stroke:#50C4E8;stroke-miterlimit:10;" d="M246.588,128.226c0-1.688,1.369-3.057,3.057-3.057
+                    s3.057,1.369,3.057,3.057c0,1.688-1.369,3.057-3.057,3.057S246.588,129.914,246.588,128.226z"/>
+                    <line style="fill:none;stroke:#50C4E8;stroke-miterlimit:10;" x1="96.151" y1="148.118" x2="96.151" y2="241.02"/>
+                    <line style="fill:none;stroke:#50C4E8;stroke-miterlimit:10;" x1="127.221" y1="148.118" x2="127.221" y2="241.02"/>
+                    <line style="fill:none;stroke:#50C4E8;stroke-miterlimit:10;" x1="173.151" y1="145.726" x2="173.151" y2="203.726"/>
+                    
+                    <line style="fill:none;stroke:#50C4E8;stroke-width:3;stroke-miterlimit:10;" x1="207.651" y1="145.726" x2="207.651" y2="241.02"/>
+                    <path style="fill:#FFFFFF;stroke:#50C4E8;stroke-width:3;stroke-miterlimit:10;" d="M104.651,184.476
+                    c0-1.688,1.369-3.057,3.057-3.057s3.057,1.369,3.057,3.057s-1.369,3.057-3.057,3.057S104.651,186.164,104.651,184.476z"/>
+                    <path style="fill:#FFFFFF;stroke:#50C4E8;stroke-miterlimit:10;" d="M93.721,145.725c0,1.342,1.088,2.431,2.43,2.431
+                    s2.43-1.089,2.43-2.431c0-1.341-1.088-2.43-2.43-2.43S93.721,144.385,93.721,145.725z"/>
+                    <path style="fill:#FFFFFF;stroke:#50C4E8;stroke-miterlimit:10;" d="M124.79,145.725c0,1.342,1.089,2.431,2.431,2.431
+                    s2.43-1.089,2.43-2.431c0-1.341-1.088-2.43-2.43-2.43S124.79,144.385,124.79,145.725z"/>
+                    <path style="fill:#50C4E8;stroke:#50C4E8;stroke-width:0.8121;stroke-miterlimit:10;" d="M214.543,81.409
+                    c0-2.761,2.238-4.999,4.999-4.999c2.761,0,4.999,2.238,4.999,4.999c0,2.761-2.238,4.999-4.999,4.999
+                    C216.782,86.408,214.543,84.17,214.543,81.409z"/>
+                    <polyline style="fill:none;stroke:#50C4E8;stroke-miterlimit:10;" points="96.151,174.226 78.651,187.226 78.651,209.726     "/>
+                    <polyline style="fill:none;stroke:#50C4E8;stroke-miterlimit:10;" points="96.151,209.726 104.651,220.226 104.651,236.726     "/>
+                    <circle style="fill:#FFFFFF;stroke:#50C4E8;stroke-miterlimit:10;" cx="78.651" cy="209.726" r="3.057"/>
+                    <circle style="fill:#FFFFFF;stroke:#50C4E8;stroke-miterlimit:10;" cx="104.651" cy="236.726" r="3.057"/>
+                    <circle style="fill:#FFFFFF;stroke:#50C4E8;stroke-miterlimit:10;" cx="173.151" cy="202.476" r="3.057"/>
+                    <path style="fill:#FFFFFF;stroke:#50C4E8;stroke-miterlimit:10;" d="M170.094,171.17c0-1.688,1.369-3.057,3.057-3.057
+                    s3.057,1.369,3.057,3.057s-1.369,3.057-3.057,3.057S170.094,172.857,170.094,171.17z"/>
+                    <path style="fill:#BCE6F5;" d="M93.357,241.02c0-1.543,1.251-2.794,2.794-2.794s2.794,1.251,2.794,2.794
+                    c0,1.543-1.251,2.794-2.794,2.794S93.357,242.563,93.357,241.02z"/>
+                    <circle style="fill:#BCE6F5;" cx="96.151" cy="250.976" r="2.794"/>
+                    <circle style="fill:#BCE6F5;" cx="96.151" cy="163.726" r="2.794"/>
+                    <path style="fill:#BCE6F5;" d="M124.426,241.02c0-1.543,1.252-2.794,2.795-2.794s2.793,1.251,2.793,2.794
+                    c0,1.543-1.25,2.794-2.793,2.794S124.426,242.563,124.426,241.02z"/>
+                    <path style="fill:#BCE6F5;" d="M124.426,202.476c0-1.543,1.252-2.794,2.795-2.794s2.793,1.251,2.793,2.794
+                    s-1.25,2.794-2.793,2.794S124.426,204.019,124.426,202.476z"/>
+                    <polyline style="fill:none;stroke:#50C4E8;stroke-width:3;stroke-miterlimit:10;" points="135.318,145.726 135.318,178.559 
+                    144.984,191.976 144.984,223.226     "/>
+                    
+                    <line style="fill:none;stroke:#50C4E8;stroke-width:3;stroke-miterlimit:10;" x1="107.707" y1="145.726" x2="107.707" y2="182.227"/>
+                    <circle style="fill:#FFFFFF;stroke:#50C4E8;stroke-width:3;stroke-miterlimit:10;" cx="144.984" cy="223.226" r="5.834"/>
+                    <path style="fill:#FFFFFF;stroke:#50C4E8;stroke-width:3;stroke-miterlimit:10;" d="M201.817,241.02
+                    c0-3.221,2.611-5.834,5.834-5.834s5.834,2.613,5.834,5.834c0,3.221-2.611,5.834-5.834,5.834S201.817,244.241,201.817,241.02z"/>
+                    
+                    <line style="fill:none;stroke:#50C4E8;stroke-width:3;stroke-miterlimit:10;" x1="207.651" y1="186.476" x2="231.401" y2="209.726"/>
+                    <circle style="fill:#FFFFFF;stroke:#50C4E8;stroke-width:3;stroke-miterlimit:10;" cx="231.401" cy="209.726" r="4.193"/>
+                    <line style="fill:none;stroke:#50C4E8;stroke-miterlimit:10;" x1="90.876" y1="81.409" x2="144.21" y2="81.409"/>
+                    <path style="fill:#FFFFFF;stroke:#50C4E8;stroke-miterlimit:10;" d="M139.146,81.409c0-2.797,2.268-5.064,5.064-5.064
+                    c2.797,0,5.064,2.268,5.064,5.064c0,2.797-2.268,5.064-5.064,5.064C141.414,86.473,139.146,84.206,139.146,81.409z"/>
+                    <path style="fill:#FFFFFF;stroke:#50C4E8;stroke-miterlimit:10;" d="M87.246,81.409c0-2.005,1.625-3.631,3.631-3.631
+                    c2.006,0,3.631,1.625,3.631,3.631c0,2.005-1.625,3.631-3.631,3.631C88.871,85.04,87.246,83.414,87.246,81.409z"/>
+                    
+                    
+                    <polyline style="fill:none;stroke:#50C4E8;stroke-miterlimit:10;" points="117.543,68.876 160.542,68.876 177.042,81.409 
+                    219.542,81.409    "/>
+                    <path style="fill:#FFFFFF;stroke:#50C4E8;stroke-miterlimit:10;" d="M113.913,68.876c0-2.005,1.626-3.631,3.631-3.631
+                    s3.631,1.626,3.631,3.631c0,2.005-1.626,3.631-3.631,3.631S113.913,70.881,113.913,68.876z"/>
+                    <polyline style="fill:none;stroke:#50C4E8;stroke-width:3;stroke-miterlimit:10;" points="81.542,59.966 198.542,59.966 
+                    224.875,40.518    "/>
+                    <path style="fill:none;stroke:#50C4E8;stroke-width:3;stroke-miterlimit:10;" d="M103.265,59.966"/>
+                    <path style="fill:#BCE6F5;" d="M232.428,40.52c0,4.17-3.383,7.551-7.553,7.551c-4.171,0-7.553-3.381-7.553-7.551
+                    c0-4.171,3.382-7.554,7.553-7.554C229.045,32.966,232.428,36.349,232.428,40.52z"/>
+                    <path style="fill:#BCE6F5;" d="M87.246,59.967c0,2.411-1.956,4.366-4.367,4.366c-2.411,0-4.366-1.955-4.366-4.366
+                    c0-2.412,1.955-4.368,4.366-4.368C85.29,55.599,87.246,57.555,87.246,59.967z"/>
+                    <path style="fill:#BCE6F5;" d="M81.412,81.41c0,2.411-1.955,4.366-4.367,4.366c-2.41,0-4.365-1.955-4.365-4.366
+                    c0-2.412,1.955-4.368,4.365-4.368C79.457,77.042,81.412,78.998,81.412,81.41z"/>
+                </g>
+                        </g>
+                </svg>
+                </div>
+                
+                <div>
+                    <svg  width="300px" height="300px" viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <g id="circuit" class="path" stroke-width="1" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="1" stroke-dasharray="45, 45" stroke-dashoffset="180" fill="#fff" stroke="#02B3E4">
+                        <polyline style="fill:none;stroke:#50C4E8;stroke-miterlimit:10;" points="28.651,131.726 56.151,131.726 56.151,145.726 
+                    249.645,145.726 249.645,128.226     "/>
+                    <circle style="fill:#FFFFFF;stroke:#50C4E8;stroke-miterlimit:10;" cx="28.651" cy="131.726" r="3.057"/>
+                    <path style="fill:#FFFFFF;stroke:#50C4E8;stroke-miterlimit:10;" d="M246.588,128.226c0-1.688,1.369-3.057,3.057-3.057
+                    s3.057,1.369,3.057,3.057c0,1.688-1.369,3.057-3.057,3.057S246.588,129.914,246.588,128.226z"/>
+                    <line style="fill:none;stroke:#50C4E8;stroke-miterlimit:10;" x1="96.151" y1="148.118" x2="96.151" y2="241.02"/>
+                    <line style="fill:none;stroke:#50C4E8;stroke-miterlimit:10;" x1="127.221" y1="148.118" x2="127.221" y2="241.02"/>
+                    <line style="fill:none;stroke:#50C4E8;stroke-miterlimit:10;" x1="173.151" y1="145.726" x2="173.151" y2="203.726"/>
+                    
+                    <line style="fill:none;stroke:#50C4E8;stroke-width:3;stroke-miterlimit:10;" x1="207.651" y1="145.726" x2="207.651" y2="241.02"/>
+                    <path style="fill:#FFFFFF;stroke:#50C4E8;stroke-width:3;stroke-miterlimit:10;" d="M104.651,184.476
+                    c0-1.688,1.369-3.057,3.057-3.057s3.057,1.369,3.057,3.057s-1.369,3.057-3.057,3.057S104.651,186.164,104.651,184.476z"/>
+                    <path style="fill:#FFFFFF;stroke:#50C4E8;stroke-miterlimit:10;" d="M93.721,145.725c0,1.342,1.088,2.431,2.43,2.431
+                    s2.43-1.089,2.43-2.431c0-1.341-1.088-2.43-2.43-2.43S93.721,144.385,93.721,145.725z"/>
+                    <path style="fill:#FFFFFF;stroke:#50C4E8;stroke-miterlimit:10;" d="M124.79,145.725c0,1.342,1.089,2.431,2.431,2.431
+                    s2.43-1.089,2.43-2.431c0-1.341-1.088-2.43-2.43-2.43S124.79,144.385,124.79,145.725z"/>
+                    <path style="fill:#50C4E8;stroke:#50C4E8;stroke-width:0.8121;stroke-miterlimit:10;" d="M214.543,81.409
+                    c0-2.761,2.238-4.999,4.999-4.999c2.761,0,4.999,2.238,4.999,4.999c0,2.761-2.238,4.999-4.999,4.999
+                    C216.782,86.408,214.543,84.17,214.543,81.409z"/>
+                    <polyline style="fill:none;stroke:#50C4E8;stroke-miterlimit:10;" points="96.151,174.226 78.651,187.226 78.651,209.726     "/>
+                    <polyline style="fill:none;stroke:#50C4E8;stroke-miterlimit:10;" points="96.151,209.726 104.651,220.226 104.651,236.726     "/>
+                    <circle style="fill:#FFFFFF;stroke:#50C4E8;stroke-miterlimit:10;" cx="78.651" cy="209.726" r="3.057"/>
+                    <circle style="fill:#FFFFFF;stroke:#50C4E8;stroke-miterlimit:10;" cx="104.651" cy="236.726" r="3.057"/>
+                    <circle style="fill:#FFFFFF;stroke:#50C4E8;stroke-miterlimit:10;" cx="173.151" cy="202.476" r="3.057"/>
+                    <path style="fill:#FFFFFF;stroke:#50C4E8;stroke-miterlimit:10;" d="M170.094,171.17c0-1.688,1.369-3.057,3.057-3.057
+                    s3.057,1.369,3.057,3.057s-1.369,3.057-3.057,3.057S170.094,172.857,170.094,171.17z"/>
+                    <path style="fill:#BCE6F5;" d="M93.357,241.02c0-1.543,1.251-2.794,2.794-2.794s2.794,1.251,2.794,2.794
+                    c0,1.543-1.251,2.794-2.794,2.794S93.357,242.563,93.357,241.02z"/>
+                    <circle style="fill:#BCE6F5;" cx="96.151" cy="250.976" r="2.794"/>
+                    <circle style="fill:#BCE6F5;" cx="96.151" cy="163.726" r="2.794"/>
+                    <path style="fill:#BCE6F5;" d="M124.426,241.02c0-1.543,1.252-2.794,2.795-2.794s2.793,1.251,2.793,2.794
+                    c0,1.543-1.25,2.794-2.793,2.794S124.426,242.563,124.426,241.02z"/>
+                    <path style="fill:#BCE6F5;" d="M124.426,202.476c0-1.543,1.252-2.794,2.795-2.794s2.793,1.251,2.793,2.794
+                    s-1.25,2.794-2.793,2.794S124.426,204.019,124.426,202.476z"/>
+                    <polyline style="fill:none;stroke:#50C4E8;stroke-width:3;stroke-miterlimit:10;" points="135.318,145.726 135.318,178.559 
+                    144.984,191.976 144.984,223.226     "/>
+                    
+                    <line style="fill:none;stroke:#50C4E8;stroke-width:3;stroke-miterlimit:10;" x1="107.707" y1="145.726" x2="107.707" y2="182.227"/>
+                    <circle style="fill:#FFFFFF;stroke:#50C4E8;stroke-width:3;stroke-miterlimit:10;" cx="144.984" cy="223.226" r="5.834"/>
+                    <path style="fill:#FFFFFF;stroke:#50C4E8;stroke-width:3;stroke-miterlimit:10;" d="M201.817,241.02
+                    c0-3.221,2.611-5.834,5.834-5.834s5.834,2.613,5.834,5.834c0,3.221-2.611,5.834-5.834,5.834S201.817,244.241,201.817,241.02z"/>
+                    
+                    <line style="fill:none;stroke:#50C4E8;stroke-width:3;stroke-miterlimit:10;" x1="207.651" y1="186.476" x2="231.401" y2="209.726"/>
+                    <circle style="fill:#FFFFFF;stroke:#50C4E8;stroke-width:3;stroke-miterlimit:10;" cx="231.401" cy="209.726" r="4.193"/>
+                    <line style="fill:none;stroke:#50C4E8;stroke-miterlimit:10;" x1="90.876" y1="81.409" x2="144.21" y2="81.409"/>
+                    <path style="fill:#FFFFFF;stroke:#50C4E8;stroke-miterlimit:10;" d="M139.146,81.409c0-2.797,2.268-5.064,5.064-5.064
+                    c2.797,0,5.064,2.268,5.064,5.064c0,2.797-2.268,5.064-5.064,5.064C141.414,86.473,139.146,84.206,139.146,81.409z"/>
+                    <path style="fill:#FFFFFF;stroke:#50C4E8;stroke-miterlimit:10;" d="M87.246,81.409c0-2.005,1.625-3.631,3.631-3.631
+                    c2.006,0,3.631,1.625,3.631,3.631c0,2.005-1.625,3.631-3.631,3.631C88.871,85.04,87.246,83.414,87.246,81.409z"/>
+                    
+                    
+                    <polyline style="fill:none;stroke:#50C4E8;stroke-miterlimit:10;" points="117.543,68.876 160.542,68.876 177.042,81.409 
+                    219.542,81.409    "/>
+                    <path style="fill:#FFFFFF;stroke:#50C4E8;stroke-miterlimit:10;" d="M113.913,68.876c0-2.005,1.626-3.631,3.631-3.631
+                    s3.631,1.626,3.631,3.631c0,2.005-1.626,3.631-3.631,3.631S113.913,70.881,113.913,68.876z"/>
+                    <polyline style="fill:none;stroke:#50C4E8;stroke-width:3;stroke-miterlimit:10;" points="81.542,59.966 198.542,59.966 
+                    224.875,40.518    "/>
+                    <path style="fill:none;stroke:#50C4E8;stroke-width:3;stroke-miterlimit:10;" d="M103.265,59.966"/>
+                    <path style="fill:#BCE6F5;" d="M232.428,40.52c0,4.17-3.383,7.551-7.553,7.551c-4.171,0-7.553-3.381-7.553-7.551
+                    c0-4.171,3.382-7.554,7.553-7.554C229.045,32.966,232.428,36.349,232.428,40.52z"/>
+                    <path style="fill:#BCE6F5;" d="M87.246,59.967c0,2.411-1.956,4.366-4.367,4.366c-2.411,0-4.366-1.955-4.366-4.366
+                    c0-2.412,1.955-4.368,4.366-4.368C85.29,55.599,87.246,57.555,87.246,59.967z"/>
+                    <path style="fill:#BCE6F5;" d="M81.412,81.41c0,2.411-1.955,4.366-4.367,4.366c-2.41,0-4.365-1.955-4.365-4.366
+                    c0-2.412,1.955-4.368,4.365-4.368C79.457,77.042,81.412,78.998,81.412,81.41z"/>
+                </g>
+                        </g>
+                </svg>
+                </div>
+            
+            </div>
+        </div>
+
+        <div id="bgDom" class="background">
+            <div class="bg1"></div>
+            <div class="bg2"></div>
+        </div>
+
+
+    </body>
+</html>
